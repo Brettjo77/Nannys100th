@@ -257,13 +257,43 @@
     });
   }
 
+  function centreIn(scroller, item) {
+    const left = item.offsetLeft - (scroller.clientWidth - item.offsetWidth) / 2;
+    scroller.scrollTo({ left, behavior: reduceMotion ? 'auto' : 'smooth' });
+  }
+
+  // Jump to a chapter, landing just below the sticky chapter bar, with its first photos already showing.
+  function goToChapter(id) {
+    const section = document.getElementById(id);
+    if (!section) return;
+    $$('.frame', section).slice(0, 6).forEach(f => {
+      f.classList.add('in');
+      $('img', f).loading = 'eager';
+    });
+    $('.chapter-head', section).classList.add('in');
+    const navH = $('.chapter-nav').offsetHeight;
+    const top = section.getBoundingClientRect().top + window.scrollY - navH + 1;
+    window.scrollTo({ top, behavior: reduceMotion ? 'auto' : 'smooth' });
+    history.replaceState(null, '', `#${id}`);
+  }
+
+  document.addEventListener('click', e => {
+    const link = e.target.closest('a[href^="#"]');
+    const id = link?.getAttribute('href').slice(1);
+    if (!id || !chapters.some(ch => ch.id === id)) return;
+    e.preventDefault();
+    if (!menu.hidden) toggleMenu(false);
+    goToChapter(id);
+  });
+
   const chapterObserver = new IntersectionObserver(entries => {
     for (const e of entries) {
       if (!e.isIntersecting) continue;
       $$('.chapter-nav .pill').forEach(p => {
         const on = p.dataset.chapter === e.target.id;
         p.setAttribute('aria-current', String(on));
-        if (on) p.scrollIntoView({ block: 'nearest', inline: 'center', behavior: reduceMotion ? 'auto' : 'smooth' });
+        // Scroll only the pill bar sideways. (scrollIntoView here would cancel a page scroll that's in progress.)
+        if (on) centreIn(p.parentElement, p);
       });
     }
   }, { rootMargin: '-45% 0px -50% 0px' });
@@ -332,7 +362,7 @@
     history.replaceState(null, '', `#photo-${num(photo)}`);
 
     $$('button', lbThumbs).forEach((b, j) => b.setAttribute('aria-current', String(j === current)));
-    lbThumbs.children[current]?.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+    if (lbThumbs.children[current]) centreIn(lbThumbs, lbThumbs.children[current]);
     [1, -1].forEach(d => { new Image().src = `images/full/${order[(current + d + order.length) % order.length].file}`; });
 
     if (timer) restartProgress();

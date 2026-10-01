@@ -117,6 +117,21 @@
     }
   }
 
+  // A moving strip of every 4th photo, drawn twice so the loop is seamless.
+  function renderCarousel() {
+    const track = document.querySelector('.carousel-track');
+    const picks = photos.filter((_, i) => i % 4 === 0);
+    const frames = picks.map(p => makeFrame(p, true));
+    const copies = picks.map(p => {
+      const f = makeFrame(p, true);
+      f.tabIndex = -1;
+      f.setAttribute('aria-hidden', 'true');
+      return f;
+    });
+    track.replaceChildren(...frames, ...copies);
+    track.style.setProperty('--duration', picks.length * 5 + 's');
+  }
+
   /* ---------- Lightbox ---------- */
   function show(i) {
     current = (i + order.length) % order.length;
@@ -225,6 +240,7 @@
       photos = data;
       order = photos.slice();
       document.querySelectorAll('[data-count]').forEach(el => { el.textContent = photos.length; });
+      renderCarousel();
       renderHero();
       renderScatter();
     })

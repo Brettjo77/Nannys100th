@@ -9,6 +9,7 @@
   const SLIDE_MS = 5000;
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const phoneViewer = matchMedia('(max-width: 700px), (max-height: 500px)');
 
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
@@ -338,6 +339,7 @@
     lastFocus = document.activeElement;
     buildThumbs();
     lb.hidden = false;
+    lb.classList.remove('bare');
     document.body.classList.add('locked');
     show(Math.max(0, i));
     autoplay ? play() : stop();
@@ -391,7 +393,11 @@
     if (action === 'fullscreen') {
       document.fullscreenElement ? document.exitFullscreen() : lb.requestFullscreen?.().catch(() => {});
     }
-    if (e.target.classList.contains('lb-stage')) close();
+    if (e.target.closest('.lb-stage') && !action) {
+      // Phones: tap anywhere on the photo to hide/show the controls. Desktop: click the backdrop to close.
+      if (phoneViewer.matches) lb.classList.toggle('bare');
+      else if (e.target.classList.contains('lb-stage')) close();
+    }
   });
 
   document.addEventListener('keydown', e => {

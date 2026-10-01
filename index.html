@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nanny Johnson · 100</title>
+  <meta name="description" content="Photographs from Nanny Johnson's 100th birthday celebration, 20 September 2026.">
+  <meta name="theme-color" content="#080808">
+  <meta property="og:title" content="Nanny Johnson · 100">
+  <meta property="og:description" content="Photographs from Nanny Johnson's 100th birthday celebration.">
+  <meta property="og:image" content="images/thumb/075.jpg">
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="wordmark" href="#top" aria-label="Nanny Johnson, back to top">NANNY JOHNSON</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="menu">
+      <span class="nav-label">Menu</span>
+      <span class="nav-glyph" aria-hidden="true"></span>
+    </button>
+  </header>
+
+  <nav id="menu" class="menu" hidden>
+    <ul>
+      <li><a href="#top" data-close>The day</a></li>
+      <li><a href="#gallery" data-close>All photographs</a></li>
+      <li><button type="button" data-action="slideshow">Play slideshow</button></li>
+      <li><button type="button" data-action="shuffle">Shuffle the pile</button></li>
+    </ul>
+  </nav>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-text">
+        <p class="eyebrow">20 September 2026</p>
+        <h1 class="display">One hundred<br>years.</h1>
+        <p class="lede">A family day out for Nanny Johnson's 100th birthday: cake, balloons, a lot of hugs and everybody squeezed into one photo.</p>
+        <div class="hero-actions">
+          <a class="pill" href="#gallery"><span>See all <span data-count>the</span> photographs</span> <span class="arrow" aria-hidden="true">→</span></a>
+          <button class="pill" type="button" data-action="slideshow">Play slideshow <span class="arrow" aria-hidden="true">▶</span></button>
+        </div>
+      </div>
+      <div class="hero-scatter" aria-label="Highlights">
+        <!-- filled by app.js -->
+      </div>
+    </section>
+
+    <section id="gallery" class="gallery-band">
+      <div class="band-head">
+        <h2 class="heading">The whole day</h2>
+        <p class="muted"><span data-count>All</span> photographs. Tap any one to see it bigger.</p>
+      </div>
+      <div class="scatter" id="scatter"></div>
+    </section>
+
+    <footer class="foot">
+      <p class="display-sm">Happy 100th, Nanny.</p>
+      <p class="muted">With love from all the family.</p>
+      <a class="pill" href="#top">Back to the top <span class="arrow" aria-hidden="true">↑</span></a>
+    </footer>
+  </main>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
+    <figure class="lb-stage">
+      <img class="lb-img" alt="">
+    </figure>
+    <div class="lb-bar">
+      <span class="lb-count" aria-live="polite"></span>
+      <div class="lb-controls">
+        <button class="pill" type="button" data-lb="prev" aria-label="Previous photo">←</button>
+        <button class="pill" type="button" data-lb="play">Play</button>
+        <button class="pill" type="button" data-lb="next" aria-label="Next photo">→</button>
+        <a class="pill" data-lb="download" download>Download</a>
+        <button class="pill" type="button" data-lb="close">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js" defer></script>
+</body>
+</html>

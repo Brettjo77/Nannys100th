@@ -1,0 +1,542 @@
+[
+ {
+  "file": "001.jpg",
+  "w": 4101,
+  "h": 4963,
+  "taken": "2026:09:20 17:05:56"
+ },
+ {
+  "file": "002.jpg",
+  "w": 2492,
+  "h": 3535,
+  "taken": "2026:09:20 17:06:56"
+ },
+ {
+  "file": "003.jpg",
+  "w": 5211,
+  "h": 6948,
+  "taken": "2026:09:20 17:07:44"
+ },
+ {
+  "file": "004.jpg",
+  "w": 5455,
+  "h": 7785,
+  "taken": "2026:09:20 17:38:15"
+ },
+ {
+  "file": "005.jpg",
+  "w": 3169,
+  "h": 4177,
+  "taken": "2026:09:20 16:48:00"
+ },
+ {
+  "file": "006.jpg",
+  "w": 7933,
+  "h": 4858,
+  "taken": null
+ },
+ {
+  "file": "007.jpg",
+  "w": 8064,
+  "h": 6048,
+  "taken": null
+ },
+ {
+  "file": "008.jpg",
+  "w": 3731,
+  "h": 2468,
+  "taken": null
+ },
+ {
+  "file": "009.jpg",
+  "w": 3024,
+  "h": 4032,
+  "taken": null
+ },
+ {
+  "file": "010.jpg",
+  "w": 7397,
+  "h": 5198,
+  "taken": null
+ },
+ {
+  "file": "011.jpg",
+  "w": 8064,
+  "h": 6048,
+  "taken": null
+ },
+ {
+  "file": "012.jpg",
+  "w": 3888,
+  "h": 2324,
+  "taken": null
+ },
+ {
+  "file": "013.jpg",
+  "w": 7645,
+  "h": 5224,
+  "taken": null
+ },
+ {
+  "file": "014.jpg",
+  "w": 3882,
+  "h": 2416,
+  "taken": null
+ },
+ {
+  "file": "015.jpg",
+  "w": 7345,
+  "h": 5068,
+  "taken": null
+ },
+ {
+  "file": "016.jpg",
+  "w": 2553,
+  "h": 3352,
+  "taken": null
+ },
+ {
+  "file": "017.jpg",
+  "w": 1728,
+  "h": 2765,
+  "taken": null
+ },
+ {
+  "file": "018.jpg",
+  "w": 3980,
+  "h": 2514,
+  "taken": null
+ },
+ {
+  "file": "019.jpg",
+  "w": 3555,
+  "h": 2521,
+  "taken": null
+ },
+ {
+  "file": "020.jpg",
+  "w": 7842,
+  "h": 5185,
+  "taken": null
+ },
+ {
+  "file": "021.jpg",
+  "w": 3607,
+  "h": 2449,
+  "taken": null
+ },
+ {
+  "file": "022.jpg",
+  "w": 6769,
+  "h": 4086,
+  "taken": null
+ },
+ {
+  "file": "023.jpg",
+  "w": 3888,
+  "h": 2540,
+  "taken": null
+ },
+ {
+  "file": "024.jpg",
+  "w": 7423,
+  "h": 5054,
+  "taken": null
+ },
+ {
+  "file": "025.jpg",
+  "w": 6048,
+  "h": 8064,
+  "taken": null
+ },
+ {
+  "file": "026.jpg",
+  "w": 7959,
+  "h": 5002,
+  "taken": null
+ },
+ {
+  "file": "027.jpg",
+  "w": 7201,
+  "h": 4675,
+  "taken": null
+ },
+ {
+  "file": "028.jpg",
+  "w": 3581,
+  "h": 2220,
+  "taken": null
+ },
+ {
+  "file": "029.jpg",
+  "w": 3345,
+  "h": 2494,
+  "taken": null
+ },
+ {
+  "file": "030.jpg",
+  "w": 8356,
+  "h": 5088,
+  "taken": null
+ },
+ {
+  "file": "031.jpg",
+  "w": 8984,
+  "h": 5208,
+  "taken": null
+ },
+ {
+  "file": "032.jpg",
+  "w": 6812,
+  "h": 4143,
+  "taken": null
+ },
+ {
+  "file": "033.jpg",
+  "w": 8056,
+  "h": 4528,
+  "taken": null
+ },
+ {
+  "file": "034.jpg",
+  "w": 4514,
+  "h": 7192,
+  "taken": null
+ },
+ {
+  "file": "035.jpg",
+  "w": 4032,
+  "h": 3024,
+  "taken": null
+ },
+ {
+  "file": "036.jpg",
+  "w": 10070,
+  "h": 6016,
+  "taken": null
+ },
+ {
+  "file": "037.jpg",
+  "w": 10719,
+  "h": 6434,
+  "taken": null
+ },
+ {
+  "file": "038.jpg",
+  "w": 12288,
+  "h": 6912,
+  "taken": null
+ },
+ {
+  "file": "039.jpg",
+  "w": 6772,
+  "h": 4446,
+  "taken": null
+ },
+ {
+  "file": "040.jpg",
+  "w": 6024,
+  "h": 4117,
+  "taken": null
+ },
+ {
+  "file": "041.jpg",
+  "w": 12288,
+  "h": 6912,
+  "taken": null
+ },
+ {
+  "file": "042.jpg",
+  "w": 12288,
+  "h": 6912,
+  "taken": null
+ },
+ {
+  "file": "043.jpg",
+  "w": 11541,
+  "h": 5791,
+  "taken": null
+ },
+ {
+  "file": "044.jpg",
+  "w": 11182,
+  "h": 6449,
+  "taken": null
+ },
+ {
+  "file": "045.jpg",
+  "w": 12288,
+  "h": 6912,
+  "taken": null
+ },
+ {
+  "file": "046.jpg",
+  "w": 10697,
+  "h": 6240,
+  "taken": null
+ },
+ {
+  "file": "047.jpg",
+  "w": 7818,
+  "h": 4999,
+  "taken": null
+ },
+ {
+  "file": "048.jpg",
+  "w": 8984,
+  "h": 5238,
+  "taken": null
+ },
+ {
+  "file": "049.jpg",
+  "w": 8984,
+  "h": 5029,
+  "taken": null
+ },
+ {
+  "file": "050.jpg",
+  "w": 12288,
+  "h": 6912,
+  "taken": null
+ },
+ {
+  "file": "051.jpg",
+  "w": 5522,
+  "h": 3753,
+  "taken": null
+ },
+ {
+  "file": "052.jpg",
+  "w": 5970,
+  "h": 4201,
+  "taken": null
+ },
+ {
+  "file": "053.jpg",
+  "w": 5455,
+  "h": 3932,
+  "taken": null
+ },
+ {
+  "file": "054.jpg",
+  "w": 7803,
+  "h": 4580,
+  "taken": null
+ },
+ {
+  "file": "055.jpg",
+  "w": 12288,
+  "h": 6912,
+  "taken": null
+ },
+ {
+  "file": "056.jpg",
+  "w": 12288,
+  "h": 6912,
+  "taken": null
+ },
+ {
+  "file": "057.jpg",
+  "w": 2646,
+  "h": 3908,
+  "taken": null
+ },
+ {
+  "file": "058.jpg",
+  "w": 3094,
+  "h": 4147,
+  "taken": null
+ },
+ {
+  "file": "059.jpg",
+  "w": 3169,
+  "h": 4177,
+  "taken": null
+ },
+ {
+  "file": "060.jpg",
+  "w": 8184,
+  "h": 4600,
+  "taken": null
+ },
+ {
+  "file": "061.jpg",
+  "w": 3540,
+  "h": 4272,
+  "taken": null
+ },
+ {
+  "file": "062.jpg",
+  "w": 12288,
+  "h": 6912,
+  "taken": null
+ },
+ {
+  "file": "063.jpg",
+  "w": 4600,
+  "h": 8184,
+  "taken": null
+ },
+ {
+  "file": "064.jpg",
+  "w": 4600,
+  "h": 8184,
+  "taken": null
+ },
+ {
+  "file": "065.jpg",
+  "w": 4600,
+  "h": 8184,
+  "taken": null
+ },
+ {
+  "file": "066.jpg",
+  "w": 12288,
+  "h": 6912,
+  "taken": null
+ },
+ {
+  "file": "067.jpg",
+  "w": 8201,
+  "h": 9925,
+  "taken": null
+ },
+ {
+  "file": "068.jpg",
+  "w": 8064,
+  "h": 6048,
+  "taken": null
+ },
+ {
+  "file": "069.jpg",
+  "w": 3024,
+  "h": 4032,
+  "taken": null
+ },
+ {
+  "file": "070.jpg",
+  "w": 4985,
+  "h": 7070,
+  "taken": null
+ },
+ {
+  "file": "071.jpg",
+  "w": 3024,
+  "h": 4032,
+  "taken": null
+ },
+ {
+  "file": "072.jpg",
+  "w": 6048,
+  "h": 8064,
+  "taken": null
+ },
+ {
+  "file": "073.jpg",
+  "w": 5211,
+  "h": 6948,
+  "taken": null
+ },
+ {
+  "file": "074.jpg",
+  "w": 6048,
+  "h": 8064,
+  "taken": null
+ },
+ {
+  "file": "075.jpg",
+  "w": 3803,
+  "h": 2527,
+  "taken": null
+ },
+ {
+  "file": "076.jpg",
+  "w": 6048,
+  "h": 8064,
+  "taken": null
+ },
+ {
+  "file": "077.jpg",
+  "w": 5455,
+  "h": 7785,
+  "taken": null
+ },
+ {
+  "file": "078.jpg",
+  "w": 6048,
+  "h": 8064,
+  "taken": null
+ },
+ {
+  "file": "079.jpg",
+  "w": 4000,
+  "h": 2250,
+  "taken": null
+ },
+ {
+  "file": "080.jpg",
+  "w": 4000,
+  "h": 2250,
+  "taken": null
+ },
+ {
+  "file": "081.jpg",
+  "w": 4000,
+  "h": 2250,
+  "taken": null
+ },
+ {
+  "file": "082.jpg",
+  "w": 7680,
+  "h": 4320,
+  "taken": null
+ },
+ {
+  "file": "083.jpg",
+  "w": 7680,
+  "h": 4320,
+  "taken": null
+ },
+ {
+  "file": "084.jpg",
+  "w": 7680,
+  "h": 4320,
+  "taken": null
+ },
+ {
+  "file": "085.jpg",
+  "w": 7680,
+  "h": 4320,
+  "taken": null
+ },
+ {
+  "file": "086.jpg",
+  "w": 7680,
+  "h": 4320,
+  "taken": null
+ },
+ {
+  "file": "087.jpg",
+  "w": 7680,
+  "h": 4320,
+  "taken": null
+ },
+ {
+  "file": "088.jpg",
+  "w": 7680,
+  "h": 4320,
+  "taken": null
+ },
+ {
+  "file": "089.jpg",
+  "w": 7680,
+  "h": 4320,
+  "taken": null
+ },
+ {
+  "file": "090.jpg",
+  "w": 1254,
+  "h": 1254,
+  "taken": null
+ }
+]

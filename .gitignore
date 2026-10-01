@@ -1,0 +1,4 @@
+# Full-size originals (~1.9 GB) stay on this PC; the site uses the resized copies in images/
+photos/
+.claude/
+__pycache__/

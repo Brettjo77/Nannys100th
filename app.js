@@ -174,7 +174,7 @@
   /* ---------- Chapters ---------- */
   function columnCount() {
     const w = window.innerWidth;
-    return w >= 1400 ? 4 : w >= 900 ? 3 : 2;
+    return w >= 1400 ? 4 : w >= 900 ? 3 : w >= 600 ? 2 : 1;
   }
 
   function renderScatter(el, list, seed) {
@@ -185,15 +185,18 @@
       return { el: c, height: 0 };
     });
     list.forEach((photo, i) => {
-      const widthPct = columns === 2 ? 86 + rand() * 14 : 70 + rand() * 30;
+      // Phones get one column of big prints; wider screens get the scattered columns.
+      const widthPct = columns === 1 ? 90 + rand() * 10 : columns === 2 ? 86 + rand() * 14 : 70 + rand() * 30;
       const xPct = rand() * (100 - widthPct);
-      const yPx = i < cols.length ? rand() * 40 : (rand() < 0.25 ? 56 + rand() * 64 : 18 + rand() * 30) * (columns === 2 ? 0.6 : 1);
+      const yPx = i < cols.length ? rand() * 40
+        : columns === 1 ? 22 + rand() * 18
+        : (rand() < 0.25 ? 56 + rand() * 64 : 18 + rand() * 30) * (columns === 2 ? 0.6 : 1);
       const frame = makePrint(photo);
       frame.style.setProperty('--w', widthPct + '%');
       frame.style.setProperty('--x', xPct + '%');
       frame.style.setProperty('--y', yPx + 'px');
-      frame.style.setProperty('--rot', ((rand() - 0.5) * 4).toFixed(2) + 'deg');
-      frame.dataset.speed = ((rand() - 0.5) * 0.09).toFixed(3);
+      frame.style.setProperty('--rot', ((rand() - 0.5) * (columns === 1 ? 2.4 : 4)).toFixed(2) + 'deg');
+      frame.dataset.speed = ((rand() - 0.5) * (columns === 1 ? 0.03 : 0.09)).toFixed(3);
       // Masonry: shortest column first, so reading order stays roughly left-to-right.
       const target = cols.reduce((a, b) => (b.height < a.height ? b : a));
       target.el.appendChild(frame);

@@ -324,27 +324,6 @@ body::after {
   margin: 0;
 }
 
-/* ---------- 1940s & 1950s ---------- */
-.era-band { padding: var(--spacing-48) var(--gutter); }
-.era-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
-  gap: var(--spacing-48);
-}
-.era {
-  border: 1px solid var(--color-pewter-border);
-  border-radius: 48px;
-  padding: var(--spacing-48) clamp(24px, 4vw, 48px);
-  display: grid;
-  gap: var(--spacing-24);
-  align-content: start;
-  transition-property: opacity, transform, border-color;
-}
-.era:hover { border-color: var(--muted); }
-.era:nth-child(2) { transition-delay: .12s; }
-.era-big { font-family: var(--font-cabinet-grotesk); font-size: clamp(28px, 3.4vw, 44px); line-height: 1.1; margin: 0; }
-.era-list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--spacing-12); color: var(--color-bone-white); }
-.era-list li { padding-top: var(--spacing-12); border-top: 1px solid var(--color-pewter-border); }
 
 /* ---------- Chapter nav ---------- */
 .chapter-nav {
@@ -395,7 +374,7 @@ body::after {
 .scatter { display: flex; gap: clamp(18px, 3.5vw, 56px); align-items: flex-start; }
 .scatter-col { flex: 1; min-width: 0; display: flex; flex-direction: column; }
 .scatter-col .frame { width: var(--w, 100%); margin-left: var(--x, 0); margin-top: var(--y, 0); }
-@media (max-width: 600px) { .scatter-col .print { --pad: 6px; --r: 2.5px; } }
+@media (max-width: 600px) { .scatter-col .print { --pad: 8px; --r: 3px; } }
 
 /* ---------- Footer ---------- */
 .foot {

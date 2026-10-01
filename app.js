@@ -289,28 +289,6 @@
   }
   window.addEventListener('scroll', onScroll, { passive: true });
 
-  /* ---------- Cursor ---------- */
-  function setupCursor() {
-    if (!finePointer || reduceMotion) return;
-    const cursor = $('.cursor');
-    let x = -100, y = -100, cx = -100, cy = -100;
-    document.addEventListener('pointermove', e => {
-      x = e.clientX; y = e.clientY;
-      cursor.classList.toggle('on', !!e.target.closest('.frame, .film') && lb.hidden);
-    });
-    document.addEventListener('pointerleave', () => cursor.classList.remove('on'));
-    const loop = () => {
-      cx += (x - cx) * 0.2;
-      cy += (y - cy) * 0.2;
-      cursor.style.transform = `translate3d(${cx}px,${cy}px,0)`;
-      requestAnimationFrame(loop);
-    };
-    loop();
-    const style = document.createElement('style');
-    style.textContent = '.frame, .film { cursor: none; }';
-    document.head.appendChild(style);
-  }
-
   /* ---------- Lightbox ---------- */
   const chapterOf = photo => chapters.find(ch => ch.photos.includes(photo));
 
@@ -361,7 +339,6 @@
     buildThumbs();
     lb.hidden = false;
     document.body.classList.add('locked');
-    $('.cursor').classList.remove('on');
     show(Math.max(0, i));
     autoplay ? play() : stop();
     $('[data-lb="close"]', lb).focus();
@@ -516,7 +493,6 @@
       renderHero();
       renderChapterNav();
       renderChapters();
-      setupCursor();
 
       const deep = location.hash.match(/^#photo-(\d+)$/);
       if (deep) {

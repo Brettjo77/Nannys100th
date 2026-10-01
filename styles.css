@@ -504,27 +504,6 @@ body::after {
   .lb-thumbs button { height: 44px; }
 }
 
-/* ---------- Cursor ---------- */
-.cursor {
-  position: fixed;
-  left: 0; top: 0;
-  z-index: 80;
-  width: 96px;
-  aspect-ratio: 1;
-  margin: -48px 0 0 -48px;
-  border-radius: 50%;
-  background: var(--color-studio-white);
-  color: var(--color-void-black);
-  display: grid;
-  place-items: center;
-  font-size: 14px;
-  pointer-events: none;
-  opacity: 0;
-  scale: .3;
-  transition: opacity .3s, scale .4s var(--ease-out);
-}
-.cursor.on { opacity: 1; scale: 1; }
-@media (hover: none), (pointer: coarse) { .cursor { display: none; } }
 
 /* ---------- Toast ---------- */
 .toast {

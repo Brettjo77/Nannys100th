@@ -3,540 +3,630 @@
   "file": "001.jpg",
   "w": 4101,
   "h": 4963,
-  "taken": "2026:09:20 17:05:56"
+  "taken": "2026:09:20 17:05:56",
+  "c": "#847f69"
  },
  {
   "file": "002.jpg",
   "w": 2492,
   "h": 3535,
-  "taken": "2026:09:20 17:06:56"
+  "taken": "2026:09:20 17:06:56",
+  "c": "#6f6d5c"
  },
  {
   "file": "003.jpg",
   "w": 5211,
   "h": 6948,
-  "taken": "2026:09:20 17:07:44"
+  "taken": "2026:09:20 17:07:44",
+  "c": "#706e5a"
  },
  {
   "file": "004.jpg",
   "w": 5455,
   "h": 7785,
-  "taken": "2026:09:20 17:38:15"
+  "taken": "2026:09:20 17:38:15",
+  "c": "#767363"
  },
  {
   "file": "005.jpg",
   "w": 3169,
   "h": 4177,
-  "taken": "2026:09:20 16:48:00"
+  "taken": "2026:09:20 16:48:00",
+  "c": "#747255"
  },
  {
   "file": "006.jpg",
   "w": 7933,
   "h": 4858,
-  "taken": null
+  "taken": null,
+  "c": "#746f6b"
  },
  {
   "file": "007.jpg",
   "w": 8064,
   "h": 6048,
-  "taken": null
+  "taken": null,
+  "c": "#8e827a"
  },
  {
   "file": "008.jpg",
   "w": 3731,
   "h": 2468,
-  "taken": null
+  "taken": null,
+  "c": "#97a09a"
  },
  {
   "file": "009.jpg",
   "w": 3024,
   "h": 4032,
-  "taken": null
+  "taken": null,
+  "c": "#918b7e"
  },
  {
   "file": "010.jpg",
   "w": 7397,
   "h": 5198,
-  "taken": null
+  "taken": null,
+  "c": "#756a5a"
  },
  {
   "file": "011.jpg",
   "w": 8064,
   "h": 6048,
-  "taken": null
+  "taken": null,
+  "c": "#807266"
  },
  {
   "file": "012.jpg",
   "w": 3888,
   "h": 2324,
-  "taken": null
+  "taken": null,
+  "c": "#8d7a6f"
  },
  {
   "file": "013.jpg",
   "w": 7645,
   "h": 5224,
-  "taken": null
+  "taken": null,
+  "c": "#887b79"
  },
  {
   "file": "014.jpg",
   "w": 3882,
   "h": 2416,
-  "taken": null
+  "taken": null,
+  "c": "#a69e95"
  },
  {
   "file": "015.jpg",
   "w": 7345,
   "h": 5068,
-  "taken": null
+  "taken": null,
+  "c": "#78706d"
  },
  {
   "file": "016.jpg",
   "w": 2553,
   "h": 3352,
-  "taken": null
+  "taken": null,
+  "c": "#a78b80"
  },
  {
   "file": "017.jpg",
   "w": 1728,
   "h": 2765,
-  "taken": null
+  "taken": null,
+  "c": "#a28f89"
  },
  {
   "file": "018.jpg",
   "w": 3980,
   "h": 2514,
-  "taken": null
+  "taken": null,
+  "c": "#64544e"
  },
  {
   "file": "019.jpg",
   "w": 3555,
   "h": 2521,
-  "taken": null
+  "taken": null,
+  "c": "#61544f"
  },
  {
   "file": "020.jpg",
   "w": 7842,
   "h": 5185,
-  "taken": null
+  "taken": null,
+  "c": "#7b6e66"
  },
  {
   "file": "021.jpg",
   "w": 3607,
   "h": 2449,
-  "taken": null
+  "taken": null,
+  "c": "#887167"
  },
  {
   "file": "022.jpg",
   "w": 6769,
   "h": 4086,
-  "taken": null
+  "taken": null,
+  "c": "#78655b"
  },
  {
   "file": "023.jpg",
   "w": 3888,
   "h": 2540,
-  "taken": null
+  "taken": null,
+  "c": "#716060"
  },
  {
   "file": "024.jpg",
   "w": 7423,
   "h": 5054,
-  "taken": null
+  "taken": null,
+  "c": "#86796d"
  },
  {
   "file": "025.jpg",
   "w": 6048,
   "h": 8064,
-  "taken": null
+  "taken": null,
+  "c": "#877463"
  },
  {
   "file": "026.jpg",
   "w": 7959,
   "h": 5002,
-  "taken": null
+  "taken": null,
+  "c": "#7b7168"
  },
  {
   "file": "027.jpg",
   "w": 7201,
   "h": 4675,
-  "taken": null
+  "taken": null,
+  "c": "#766a61"
  },
  {
   "file": "028.jpg",
   "w": 3581,
   "h": 2220,
-  "taken": null
+  "taken": null,
+  "c": "#89817c"
  },
  {
   "file": "029.jpg",
   "w": 3345,
   "h": 2494,
-  "taken": null
+  "taken": null,
+  "c": "#877570"
  },
  {
   "file": "030.jpg",
   "w": 8356,
   "h": 5088,
-  "taken": null
+  "taken": null,
+  "c": "#738447"
  },
  {
   "file": "031.jpg",
   "w": 8984,
   "h": 5208,
-  "taken": null
+  "taken": null,
+  "c": "#79893d"
  },
  {
   "file": "032.jpg",
   "w": 6812,
   "h": 4143,
-  "taken": null
+  "taken": null,
+  "c": "#8c8886"
  },
  {
   "file": "033.jpg",
   "w": 8056,
   "h": 4528,
-  "taken": null
+  "taken": null,
+  "c": "#70756a"
  },
  {
   "file": "034.jpg",
   "w": 4514,
   "h": 7192,
-  "taken": null
+  "taken": null,
+  "c": "#c5afa3"
  },
  {
   "file": "035.jpg",
   "w": 4032,
   "h": 3024,
-  "taken": null
+  "taken": null,
+  "c": "#877066"
  },
  {
   "file": "036.jpg",
   "w": 10070,
   "h": 6016,
-  "taken": null
+  "taken": null,
+  "c": "#848b6c"
  },
  {
   "file": "037.jpg",
   "w": 10719,
   "h": 6434,
-  "taken": null
+  "taken": null,
+  "c": "#848a6e"
  },
  {
   "file": "038.jpg",
   "w": 12288,
   "h": 6912,
-  "taken": null
+  "taken": null,
+  "c": "#7c7e6a"
  },
  {
   "file": "039.jpg",
   "w": 6772,
   "h": 4446,
-  "taken": null
+  "taken": null,
+  "c": "#767661"
  },
  {
   "file": "040.jpg",
   "w": 6024,
   "h": 4117,
-  "taken": null
+  "taken": null,
+  "c": "#747161"
  },
  {
   "file": "041.jpg",
   "w": 12288,
   "h": 6912,
-  "taken": null
+  "taken": null,
+  "c": "#70705e"
  },
  {
   "file": "042.jpg",
   "w": 12288,
   "h": 6912,
-  "taken": null
+  "taken": null,
+  "c": "#808170"
  },
  {
   "file": "043.jpg",
   "w": 11541,
   "h": 5791,
-  "taken": null
+  "taken": null,
+  "c": "#817f6b"
  },
  {
   "file": "044.jpg",
   "w": 11182,
   "h": 6449,
-  "taken": null
+  "taken": null,
+  "c": "#7a7765"
  },
  {
   "file": "045.jpg",
   "w": 12288,
   "h": 6912,
-  "taken": null
+  "taken": null,
+  "c": "#848670"
  },
  {
   "file": "046.jpg",
   "w": 10697,
   "h": 6240,
-  "taken": null
+  "taken": null,
+  "c": "#7a7a68"
  },
  {
   "file": "047.jpg",
   "w": 7818,
   "h": 4999,
-  "taken": null
+  "taken": null,
+  "c": "#686856"
  },
  {
   "file": "048.jpg",
   "w": 8984,
   "h": 5238,
-  "taken": null
+  "taken": null,
+  "c": "#656650"
  },
  {
   "file": "049.jpg",
   "w": 8984,
   "h": 5029,
-  "taken": null
+  "taken": null,
+  "c": "#6d6e58"
  },
  {
   "file": "050.jpg",
   "w": 12288,
   "h": 6912,
-  "taken": null
+  "taken": null,
+  "c": "#7c7d69"
  },
  {
   "file": "051.jpg",
   "w": 5522,
   "h": 3753,
-  "taken": null
+  "taken": null,
+  "c": "#6c6b5a"
  },
  {
   "file": "052.jpg",
   "w": 5970,
   "h": 4201,
-  "taken": null
+  "taken": null,
+  "c": "#6a6b57"
  },
  {
   "file": "053.jpg",
   "w": 5455,
   "h": 3932,
-  "taken": null
+  "taken": null,
+  "c": "#6a6a58"
  },
  {
   "file": "054.jpg",
   "w": 7803,
   "h": 4580,
-  "taken": null
+  "taken": null,
+  "c": "#666953"
  },
  {
   "file": "055.jpg",
   "w": 12288,
   "h": 6912,
-  "taken": null
+  "taken": null,
+  "c": "#72715d"
  },
  {
   "file": "056.jpg",
   "w": 12288,
   "h": 6912,
-  "taken": null
+  "taken": null,
+  "c": "#74735e"
  },
  {
   "file": "057.jpg",
   "w": 2646,
   "h": 3908,
-  "taken": null
+  "taken": null,
+  "c": "#66614d"
  },
  {
   "file": "058.jpg",
   "w": 3094,
   "h": 4147,
-  "taken": null
+  "taken": null,
+  "c": "#706e56"
  },
  {
   "file": "059.jpg",
   "w": 3169,
   "h": 4177,
-  "taken": null
+  "taken": null,
+  "c": "#747255"
  },
  {
   "file": "060.jpg",
   "w": 8184,
   "h": 4600,
-  "taken": null
+  "taken": null,
+  "c": "#938b88"
  },
  {
   "file": "061.jpg",
   "w": 3540,
   "h": 4272,
-  "taken": null
+  "taken": null,
+  "c": "#9f9593"
  },
  {
   "file": "062.jpg",
   "w": 12288,
   "h": 6912,
-  "taken": null
+  "taken": null,
+  "c": "#969d95"
  },
  {
   "file": "063.jpg",
   "w": 4600,
   "h": 8184,
-  "taken": null
+  "taken": null,
+  "c": "#81827d"
  },
  {
   "file": "064.jpg",
   "w": 4600,
   "h": 8184,
-  "taken": null
+  "taken": null,
+  "c": "#8d8a87"
  },
  {
   "file": "065.jpg",
   "w": 4600,
   "h": 8184,
-  "taken": null
+  "taken": null,
+  "c": "#918f8c"
  },
  {
   "file": "066.jpg",
   "w": 12288,
   "h": 6912,
-  "taken": null
+  "taken": null,
+  "c": "#646e2f"
  },
  {
   "file": "067.jpg",
   "w": 8201,
   "h": 9925,
-  "taken": null
+  "taken": null,
+  "c": "#88836d"
  },
  {
   "file": "068.jpg",
   "w": 8064,
   "h": 6048,
-  "taken": null
+  "taken": null,
+  "c": "#6d6b5e"
  },
  {
   "file": "069.jpg",
   "w": 3024,
   "h": 4032,
-  "taken": null
+  "taken": null,
+  "c": "#717165"
  },
  {
   "file": "070.jpg",
   "w": 4985,
   "h": 7070,
-  "taken": null
+  "taken": null,
+  "c": "#6f6d5d"
  },
  {
   "file": "071.jpg",
   "w": 3024,
   "h": 4032,
-  "taken": null
+  "taken": null,
+  "c": "#717266"
  },
  {
   "file": "072.jpg",
   "w": 6048,
   "h": 8064,
-  "taken": null
+  "taken": null,
+  "c": "#666559"
  },
  {
   "file": "073.jpg",
   "w": 5211,
   "h": 6948,
-  "taken": null
+  "taken": null,
+  "c": "#706e5a"
  },
  {
   "file": "074.jpg",
   "w": 6048,
   "h": 8064,
-  "taken": null
+  "taken": null,
+  "c": "#67665a"
  },
  {
   "file": "075.jpg",
   "w": 3803,
   "h": 2527,
-  "taken": null
+  "taken": null,
+  "c": "#6f6354"
  },
  {
   "file": "076.jpg",
   "w": 6048,
   "h": 8064,
-  "taken": null
+  "taken": null,
+  "c": "#6b6b62"
  },
  {
   "file": "077.jpg",
   "w": 5455,
   "h": 7785,
-  "taken": null
+  "taken": null,
+  "c": "#767363"
  },
  {
   "file": "078.jpg",
   "w": 6048,
   "h": 8064,
-  "taken": null
+  "taken": null,
+  "c": "#6e6e64"
  },
  {
   "file": "079.jpg",
   "w": 4000,
   "h": 2250,
-  "taken": null
+  "taken": null,
+  "c": "#6b5f60"
  },
  {
   "file": "080.jpg",
   "w": 4000,
   "h": 2250,
-  "taken": null
+  "taken": null,
+  "c": "#6b5d5e"
  },
  {
   "file": "081.jpg",
   "w": 4000,
   "h": 2250,
-  "taken": null
+  "taken": null,
+  "c": "#746a6a"
  },
  {
   "file": "082.jpg",
   "w": 7680,
   "h": 4320,
-  "taken": null
+  "taken": null,
+  "c": "#85786e"
  },
  {
   "file": "083.jpg",
   "w": 7680,
   "h": 4320,
-  "taken": null
+  "taken": null,
+  "c": "#81756b"
  },
  {
   "file": "084.jpg",
   "w": 7680,
   "h": 4320,
-  "taken": null
+  "taken": null,
+  "c": "#807975"
  },
  {
   "file": "085.jpg",
   "w": 7680,
   "h": 4320,
-  "taken": null
+  "taken": null,
+  "c": "#827c77"
  },
  {
   "file": "086.jpg",
   "w": 7680,
   "h": 4320,
-  "taken": null
+  "taken": null,
+  "c": "#878483"
  },
  {
   "file": "087.jpg",
   "w": 7680,
   "h": 4320,
-  "taken": null
+  "taken": null,
+  "c": "#817b73"
  },
  {
   "file": "088.jpg",
   "w": 7680,
   "h": 4320,
-  "taken": null
+  "taken": null,
+  "c": "#8b8582"
  },
  {
   "file": "089.jpg",
   "w": 7680,
   "h": 4320,
-  "taken": null
+  "taken": null,
+  "c": "#7d736c"
  },
  {
   "file": "090.jpg",
   "w": 1254,
   "h": 1254,
-  "taken": null
+  "taken": null,
+  "c": "#686060"
  }
 ]

@@ -40,7 +40,10 @@ def process(args):
             copy = im.copy()
             copy.thumbnail((edge, edge), Image.LANCZOS)
             copy.save(dest, "JPEG", quality=quality, optimize=True, progressive=True)
-    return {"file": name, "w": w, "h": h, "taken": taken}
+    # Average colour, shown as a placeholder while the photo loads.
+    with Image.open(OUT_THUMB / name) as t:
+        r, g, b = t.convert("RGB").resize((1, 1), Image.BOX).getpixel((0, 0))
+    return {"file": name, "w": w, "h": h, "taken": taken, "c": f"#{r:02x}{g:02x}{b:02x}"}
 
 
 def main():

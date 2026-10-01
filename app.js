@@ -1,31 +1,39 @@
 (() => {
+  // Hero highlights: photo number, left %, top %, width %, rotation
   const HIGHLIGHTS = [
-    // file, left %, top %, width % (of the hero scatter box)
-    ['075.jpg', 0, 4, 58],
-    ['090.jpg', 62, 0, 36],
-    ['040.jpg', 30, 52, 52],
-    ['014.jpg', 2, 66, 30],
+    [75, 0, 6, 56, -2.5],
+    [90, 61, 0, 37, 2],
+    [40, 30, 50, 52, 1.2],
+    [14, 3, 64, 30, -3],
   ];
-  const SLIDE_MS = 4500;
+  const SLIDE_MS = 5000;
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-  const scatterEl = document.getElementById('scatter');
-  const heroEl = document.querySelector('.hero-scatter');
-  const lb = document.getElementById('lightbox');
-  const lbImg = lb.querySelector('.lb-img');
-  const lbCount = lb.querySelector('.lb-count');
-  const lbPlay = lb.querySelector('[data-lb="play"]');
-  const lbDownload = lb.querySelector('[data-lb="download"]');
-  const menu = document.getElementById('menu');
-  const navToggle = document.querySelector('.nav-toggle');
+  const $ = (s, el = document) => el.querySelector(s);
+  const $$ = (s, el = document) => [...el.querySelectorAll(s)];
 
-  let photos = [];
-  let order = [];
-  let seed = 100;
+  const lb = $('#lightbox');
+  const lbPrint = $('.lb-print', lb);
+  const lbImg = $('.lb-img', lb);
+  const lbCount = $('.lb-count', lb);
+  const lbChapter = $('.lb-chapter', lb);
+  const lbPlay = $('[data-lb="play"]', lb);
+  const lbDownload = $('[data-lb="download"]', lb);
+  const lbProgress = $('.lb-progress', lb);
+  const lbThumbs = $('.lb-thumbs', lb);
+  const menu = $('#menu');
+  const navToggle = $('.nav-toggle');
+
+  let photos = [];   // everything, in file order
+  let chapters = []; // [{id, title, blurb, photos: [photo]}]
+  let order = [];    // lightbox order: chapter by chapter
   let columns = 0;
   let current = 0;
   let timer = null;
+  let lastFocus = null;
 
-  // Small deterministic PRNG so the scatter is stable until shuffled.
+  // Small deterministic PRNG so the scatter looks the same on every visit.
   function rng(s) {
     return () => {
       s = (s + 0x6d2b79f5) | 0;
@@ -34,15 +42,9 @@
       return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
     };
   }
+  const num = photo => parseInt(photo.file, 10);
 
-  // Soft corners: up to 160px, but never more than a fifth of the frame's short side.
-  const radiusObserver = new ResizeObserver(entries => {
-    for (const e of entries) {
-      const { width, height } = e.contentRect;
-      e.target.style.setProperty('--r', Math.min(160, Math.min(width, height) * 0.2) + 'px');
-    }
-  });
-
+  /* ---------- Reveal on scroll ---------- */
   const revealObserver = new IntersectionObserver(entries => {
     for (const e of entries) {
       if (e.isIntersecting) {
@@ -50,14 +52,9 @@
         revealObserver.unobserve(e.target);
       }
     }
-  }, { rootMargin: '0px 0px -40px 0px' });
+  }, { rootMargin: '0px 0px -8% 0px' });
 
-  function makeFrame(photo, eager = false) {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'frame';
-    btn.setAttribute('aria-label', `Open photo ${photos.indexOf(photo) + 1} of ${photos.length}`);
-    btn.style.aspectRatio = `${photo.w} / ${photo.h}`;
+  function image(photo, eager) {
     const img = document.createElement('img');
     img.src = `images/thumb/${photo.file}`;
     img.alt = '';
@@ -65,112 +62,346 @@
     img.height = photo.h;
     img.decoding = 'async';
     if (!eager) img.loading = 'lazy';
-    btn.appendChild(img);
-    btn.addEventListener('click', () => open(order.indexOf(photo)));
-    radiusObserver.observe(btn);
+    return img;
+  }
+
+  // A clickable vintage print.
+  function makePrint(photo, eager = false) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'frame';
+    btn.dataset.photo = num(photo);
+    btn.setAttribute('aria-label', `Open photo ${order.indexOf(photo) + 1} of ${order.length}`);
+    const paper = document.createElement('div');
+    paper.className = 'print';
+    paper.style.setProperty('--ph', photo.c);
+    paper.appendChild(image(photo, eager));
+    btn.appendChild(paper);
     revealObserver.observe(btn);
     return btn;
   }
 
+  /* ---------- Film strip carousel ---------- */
+  const carousel = { x: 0, speed: 0, boost: 0, half: 0, hover: false };
+
+  function renderCarousel() {
+    const track = $('.carousel-track');
+    const picks = order.filter((_, i) => i % 3 === 0);
+    const film = (photo, hidden) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'film';
+      b.dataset.photo = num(photo);
+      b.style.setProperty('--ph', photo.c);
+      if (hidden) { b.tabIndex = -1; b.setAttribute('aria-hidden', 'true'); }
+      else b.setAttribute('aria-label', `Open photo ${order.indexOf(photo) + 1}`);
+      b.appendChild(image(photo, !hidden));
+      return b;
+    };
+    track.replaceChildren(...picks.map(p => film(p)), ...picks.map(p => film(p, true)));
+    const measure = () => { carousel.half = track.scrollWidth / 2; };
+    measure();
+    window.addEventListener('resize', measure);
+    track.addEventListener('load', measure, true);
+
+    const section = $('.carousel');
+    section.addEventListener('pointerenter', () => { carousel.hover = true; });
+    section.addEventListener('pointerleave', () => { carousel.hover = false; });
+    section.addEventListener('focusin', () => { carousel.hover = true; });
+    section.addEventListener('focusout', () => { carousel.hover = false; });
+    if (reduceMotion) return;
+
+    let last = performance.now();
+    const tick = now => {
+      const dt = Math.min(64, now - last) / 1000;
+      last = now;
+      const target = carousel.hover ? 0 : 38; // px per second
+      carousel.speed += (target - carousel.speed) * Math.min(1, dt * 3);
+      carousel.boost *= Math.pow(0.04, dt); // scroll boost decays quickly
+      carousel.x -= (carousel.speed + carousel.boost) * dt;
+      if (carousel.half) {
+        if (carousel.x <= -carousel.half) carousel.x += carousel.half;
+        if (carousel.x > 0) carousel.x -= carousel.half;
+      }
+      track.style.transform = `translate3d(${carousel.x}px,0,0)`;
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+
+  /* ---------- Hero ---------- */
+  function renderHero() {
+    const hero = $('.hero-scatter');
+    for (const [n, left, top, width, rot] of HIGHLIGHTS) {
+      const photo = photos.find(p => num(p) === n);
+      if (!photo) continue;
+      const frame = makePrint(photo, true);
+      Object.assign(frame.style, { left: left + '%', top: top + '%', width: width + '%' });
+      frame.style.setProperty('--rot', rot + 'deg');
+      frame.dataset.depth = (0.6 + Math.abs(rot) / 4).toFixed(2);
+      hero.appendChild(frame);
+    }
+    if (reduceMotion || !finePointer) return;
+    // Prints drift slightly with the mouse, at different depths.
+    const heroSection = $('.hero');
+    heroSection.addEventListener('pointermove', e => {
+      const r = heroSection.getBoundingClientRect();
+      const dx = (e.clientX - r.left) / r.width - 0.5;
+      const dy = (e.clientY - r.top) / r.height - 0.5;
+      for (const f of $$('.frame', hero)) {
+        const d = +f.dataset.depth * 22;
+        f.style.translate = `${(-dx * d).toFixed(1)}px ${(-dy * d).toFixed(1)}px`;
+      }
+    });
+    heroSection.addEventListener('pointerleave', () => $$('.frame', hero).forEach(f => { f.style.translate = ''; }));
+  }
+
+  function tickYears() {
+    const el = $('.ticker');
+    if (reduceMotion) { el.textContent = '2026'; return; }
+    const start = performance.now();
+    const dur = 2200;
+    const step = now => {
+      const t = Math.min(1, (now - start) / dur);
+      const eased = 1 - Math.pow(1 - t, 4);
+      el.textContent = 1926 + Math.round(eased * 100);
+      if (t < 1) requestAnimationFrame(step);
+    };
+    setTimeout(() => requestAnimationFrame(step), 500);
+  }
+
+  /* ---------- Chapters ---------- */
   function columnCount() {
     const w = window.innerWidth;
     return w >= 1400 ? 4 : w >= 900 ? 3 : 2;
   }
 
-  function renderScatter() {
-    columns = columnCount();
+  function renderScatter(el, list, seed) {
     const rand = rng(seed);
-    const cols = Array.from({ length: columns }, () => {
-      const el = document.createElement('div');
-      el.className = 'scatter-col';
-      return { el, height: 0 };
+    const cols = Array.from({ length: Math.min(columns, list.length) }, () => {
+      const c = document.createElement('div');
+      c.className = 'scatter-col';
+      return { el: c, height: 0 };
     });
-
-    order.forEach((photo, i) => {
-      const widthPct = columns === 2 ? 82 + rand() * 18 : 68 + rand() * 32;
+    list.forEach((photo, i) => {
+      const widthPct = columns === 2 ? 86 + rand() * 14 : 70 + rand() * 30;
       const xPct = rand() * (100 - widthPct);
-      const yPx = (rand() < 0.25 ? 48 + rand() * 72 : 15 + rand() * 33) * (columns === 2 ? 0.6 : 1);
-      const frame = makeFrame(photo);
+      const yPx = i < cols.length ? rand() * 40 : (rand() < 0.25 ? 56 + rand() * 64 : 18 + rand() * 30) * (columns === 2 ? 0.6 : 1);
+      const frame = makePrint(photo);
       frame.style.setProperty('--w', widthPct + '%');
       frame.style.setProperty('--x', xPct + '%');
-      frame.style.setProperty('--y', (i < columns ? rand() * 48 : yPx) + 'px');
-
-      // Masonry: drop each photo into the shortest column to keep the order roughly left-to-right.
+      frame.style.setProperty('--y', yPx + 'px');
+      frame.style.setProperty('--rot', ((rand() - 0.5) * 4).toFixed(2) + 'deg');
+      frame.dataset.speed = ((rand() - 0.5) * 0.09).toFixed(3);
+      // Masonry: shortest column first, so reading order stays roughly left-to-right.
       const target = cols.reduce((a, b) => (b.height < a.height ? b : a));
       target.el.appendChild(frame);
       target.height += (widthPct / 100) * (photo.h / photo.w) + yPx / 300;
+      parallaxObserver.observe(frame);
     });
-
-    scatterEl.replaceChildren(...cols.map(c => c.el));
+    el.replaceChildren(...cols.map(c => c.el));
   }
 
-  function renderHero() {
-    const byFile = new Map(photos.map(p => [p.file, p]));
-    for (const [file, left, top, width] of HIGHLIGHTS) {
-      const photo = byFile.get(file);
-      if (!photo) continue;
-      const frame = makeFrame(photo, true);
-      frame.style.left = left + '%';
-      frame.style.top = top + '%';
-      frame.style.width = width + '%';
-      heroEl.appendChild(frame);
+  function renderChapters() {
+    columns = columnCount();
+    const wrap = $('#chapters');
+    if (!wrap.children.length) {
+      chapters.forEach((ch, i) => {
+        const section = document.createElement('section');
+        section.className = 'chapter';
+        section.id = ch.id;
+        section.setAttribute('aria-labelledby', `${ch.id}-title`);
+        section.innerHTML = `
+          <div class="chapter-head fade-up">
+            <span class="chapter-num" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <h2 class="heading" id="${ch.id}-title"></h2>
+              <p class="muted"></p>
+            </div>
+            <p class="stamp chapter-count">${ch.photos.length} photographs</p>
+          </div>
+          <div class="scatter"></div>`;
+        $('h2', section).textContent = ch.title;
+        $('.muted', section).textContent = ch.blurb;
+        revealObserver.observe($('.chapter-head', section));
+        wrap.appendChild(section);
+        chapterObserver.observe(section);
+      });
     }
+    chapters.forEach((ch, i) => renderScatter($(`#${ch.id} .scatter`), ch.photos, 100 + i * 17));
   }
 
-  // A moving strip of every 4th photo, drawn twice so the loop is seamless.
-  function renderCarousel() {
-    const track = document.querySelector('.carousel-track');
-    const picks = photos.filter((_, i) => i % 4 === 0);
-    const frames = picks.map(p => makeFrame(p, true));
-    const copies = picks.map(p => {
-      const f = makeFrame(p, true);
-      f.tabIndex = -1;
-      f.setAttribute('aria-hidden', 'true');
-      return f;
+  function renderChapterNav() {
+    const nav = $('.chapter-nav-inner');
+    const links = $('[data-menu-links]');
+    chapters.forEach(ch => {
+      const a = document.createElement('a');
+      a.className = 'pill';
+      a.href = `#${ch.id}`;
+      a.dataset.chapter = ch.id;
+      a.innerHTML = `<span></span> <small>${ch.photos.length}</small>`;
+      a.firstChild.textContent = ch.title;
+      nav.appendChild(a);
+
+      const li = document.createElement('li');
+      const m = document.createElement('a');
+      m.href = `#${ch.id}`;
+      m.dataset.close = '';
+      m.textContent = ch.title;
+      li.appendChild(m);
+      links.appendChild(li);
     });
-    track.replaceChildren(...frames, ...copies);
-    track.style.setProperty('--duration', picks.length * 5 + 's');
+  }
+
+  const chapterObserver = new IntersectionObserver(entries => {
+    for (const e of entries) {
+      if (!e.isIntersecting) continue;
+      $$('.chapter-nav .pill').forEach(p => {
+        const on = p.dataset.chapter === e.target.id;
+        p.setAttribute('aria-current', String(on));
+        if (on) p.scrollIntoView({ block: 'nearest', inline: 'center', behavior: reduceMotion ? 'auto' : 'smooth' });
+      });
+    }
+  }, { rootMargin: '-45% 0px -50% 0px' });
+
+  /* ---------- Scroll parallax ---------- */
+  const visible = new Set();
+  const parallaxObserver = new IntersectionObserver(entries => {
+    for (const e of entries) e.isIntersecting ? visible.add(e.target) : visible.delete(e.target);
+  }, { rootMargin: '200px 0px' });
+
+  let lastY = window.scrollY;
+  let scrollRaf = 0;
+  function onScroll() {
+    const y = window.scrollY;
+    carousel.boost = Math.min(900, carousel.boost + Math.abs(y - lastY) * 4);
+    lastY = y;
+    if (reduceMotion || scrollRaf) return;
+    scrollRaf = requestAnimationFrame(() => {
+      scrollRaf = 0;
+      const mid = window.innerHeight / 2;
+      for (const f of visible) {
+        const r = f.getBoundingClientRect();
+        const offset = (r.top + r.height / 2 - mid) * +f.dataset.speed;
+        f.style.translate = `0 ${offset.toFixed(1)}px`;
+      }
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* ---------- Cursor ---------- */
+  function setupCursor() {
+    if (!finePointer || reduceMotion) return;
+    const cursor = $('.cursor');
+    let x = -100, y = -100, cx = -100, cy = -100;
+    document.addEventListener('pointermove', e => {
+      x = e.clientX; y = e.clientY;
+      cursor.classList.toggle('on', !!e.target.closest('.frame, .film') && lb.hidden);
+    });
+    document.addEventListener('pointerleave', () => cursor.classList.remove('on'));
+    const loop = () => {
+      cx += (x - cx) * 0.2;
+      cy += (y - cy) * 0.2;
+      cursor.style.transform = `translate3d(${cx}px,${cy}px,0)`;
+      requestAnimationFrame(loop);
+    };
+    loop();
+    const style = document.createElement('style');
+    style.textContent = '.frame, .film { cursor: none; }';
+    document.head.appendChild(style);
   }
 
   /* ---------- Lightbox ---------- */
+  const chapterOf = photo => chapters.find(ch => ch.photos.includes(photo));
+
+  function buildThumbs() {
+    if (lbThumbs.children.length) return;
+    order.forEach((photo, i) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.style.setProperty('--ph', photo.c);
+      b.setAttribute('aria-label', `Photo ${i + 1}`);
+      b.appendChild(image(photo));
+      b.addEventListener('click', () => { stop(); show(i); });
+      lbThumbs.appendChild(b);
+    });
+  }
+
   function show(i) {
     current = (i + order.length) % order.length;
     const photo = order[current];
-    lbImg.classList.add('loading');
-    lbImg.onload = () => lbImg.classList.remove('loading');
-    lbImg.src = `images/full/${photo.file}`;
-    lbImg.alt = `Photo ${current + 1} from Nanny Johnson's 100th birthday`;
+    const ch = chapterOf(photo);
+    lbPrint.classList.add('loading');
+    const src = `images/full/${photo.file}`;
+    const pre = new Image();
+    pre.onload = pre.onerror = () => {
+      if (order[current] !== photo) return;
+      lbImg.src = src;
+      lbImg.width = photo.w;
+      lbImg.height = photo.h;
+      requestAnimationFrame(() => lbPrint.classList.remove('loading'));
+    };
+    setTimeout(() => { pre.src = src; }, 150);
+    lbImg.alt = `Photo ${current + 1}: ${ch ? ch.title : ''}`;
+    lbChapter.textContent = ch ? ch.title : '';
     lbCount.textContent = `${current + 1} / ${order.length}`;
-    lbDownload.href = `images/full/${photo.file}`;
+    lbDownload.href = src;
     lbDownload.setAttribute('download', `Nanny-Johnson-100th-${photo.file}`);
-    // Warm the cache for the neighbours so next/prev feels instant.
+    history.replaceState(null, '', `#photo-${num(photo)}`);
+
+    $$('button', lbThumbs).forEach((b, j) => b.setAttribute('aria-current', String(j === current)));
+    lbThumbs.children[current]?.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
     [1, -1].forEach(d => { new Image().src = `images/full/${order[(current + d + order.length) % order.length].file}`; });
+
+    if (timer) restartProgress();
   }
 
   function open(i, autoplay = false) {
+    lastFocus = document.activeElement;
+    buildThumbs();
     lb.hidden = false;
     document.body.classList.add('locked');
+    $('.cursor').classList.remove('on');
     show(Math.max(0, i));
     autoplay ? play() : stop();
-    lb.querySelector('[data-lb="close"]').focus();
+    $('[data-lb="close"]', lb).focus();
   }
 
   function close() {
     stop();
+    if (document.fullscreenElement) document.exitFullscreen();
     lb.hidden = true;
     document.body.classList.remove('locked');
+    history.replaceState(null, '', location.pathname);
+    // If opened from the gallery, land on the photo you were last looking at.
+    const back = lastFocus?.closest?.('#chapters') && $(`#chapters .frame[data-photo="${num(order[current])}"]`);
+    if (back) {
+      back.scrollIntoView({ block: 'center', behavior: 'auto' });
+      back.focus({ preventScroll: true });
+    } else {
+      lastFocus?.focus?.({ preventScroll: true });
+    }
+  }
+
+  function restartProgress() {
+    lbProgress.classList.remove('run');
+    void lbProgress.offsetWidth;
+    lbProgress.style.setProperty('--slide', SLIDE_MS + 'ms');
+    lbProgress.classList.add('run');
   }
 
   function play() {
-    stop();
+    clearInterval(timer);
     timer = setInterval(() => show(current + 1), SLIDE_MS);
     lbPlay.textContent = 'Pause';
+    restartProgress();
   }
 
   function stop() {
     clearInterval(timer);
     timer = null;
     lbPlay.textContent = 'Play';
+    lbProgress.classList.remove('run');
   }
 
   lb.addEventListener('click', e => {
@@ -179,35 +410,65 @@
     if (action === 'next') { stop(); show(current + 1); }
     if (action === 'play') timer ? stop() : play();
     if (action === 'close') close();
-    if (e.target === lb || e.target.classList.contains('lb-stage')) close();
+    if (action === 'share') share(location.href, 'Link to this photo copied');
+    if (action === 'fullscreen') {
+      document.fullscreenElement ? document.exitFullscreen() : lb.requestFullscreen?.().catch(() => {});
+    }
+    if (e.target.classList.contains('lb-stage')) close();
   });
 
   document.addEventListener('keydown', e => {
     if (!lb.hidden) {
       if (e.key === 'ArrowRight') { stop(); show(current + 1); }
       if (e.key === 'ArrowLeft') { stop(); show(current - 1); }
-      if (e.key === ' ') { e.preventDefault(); timer ? stop() : play(); }
-      if (e.key === 'Escape') close();
+      if (e.key === ' ' && !e.target.closest('button, a')) { e.preventDefault(); timer ? stop() : play(); }
+      if (e.key === 'Escape' && !document.fullscreenElement) close();
+      if (e.key === 'Tab') {
+        // Keep keyboard focus inside the viewer.
+        const items = $$('button, a[href]', lb).filter(el => el.offsetParent !== null);
+        const first = items[0], last = items[items.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
     } else if (e.key === 'Escape' && !menu.hidden) {
       toggleMenu(false);
     }
   });
 
   let touchX = null;
-  lb.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
-  lb.addEventListener('touchend', e => {
+  $('.lb-stage', lb).addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
+  $('.lb-stage', lb).addEventListener('touchend', e => {
     if (touchX === null) return;
     const dx = e.changedTouches[0].clientX - touchX;
     if (Math.abs(dx) > 50) { stop(); show(current + (dx < 0 ? 1 : -1)); }
     touchX = null;
   });
 
+  /* ---------- Share & toast ---------- */
+  let toastTimer;
+  function toast(msg) {
+    const t = $('.toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 2400);
+  }
+
+  async function share(url, copiedMsg) {
+    const data = { title: "Nanny Johnson · 100", text: "Photos from Nanny Johnson's 100th birthday", url };
+    if (navigator.share) {
+      try { await navigator.share(data); return; } catch (err) { if (err.name === 'AbortError') return; }
+    }
+    try { await navigator.clipboard.writeText(url); toast(copiedMsg); }
+    catch { toast(url); }
+  }
+
   /* ---------- Menu ---------- */
   function toggleMenu(force) {
     const opening = force ?? menu.hidden;
     menu.hidden = !opening;
     navToggle.setAttribute('aria-expanded', String(opening));
-    navToggle.querySelector('.nav-label').textContent = opening ? 'Close' : 'Menu';
+    $('.nav-label', navToggle).textContent = opening ? 'Close' : 'Menu';
     document.body.classList.toggle('menu-open', opening);
     document.body.classList.toggle('locked', opening);
   }
@@ -215,36 +476,61 @@
   menu.addEventListener('click', e => { if (e.target.closest('[data-close]')) toggleMenu(false); });
 
   document.addEventListener('click', e => {
+    const opener = e.target.closest('.frame, .film');
+    if (opener) {
+      const photo = order.find(p => num(p) === +opener.dataset.photo);
+      open(order.indexOf(photo));
+      return;
+    }
     const action = e.target.closest('[data-action]')?.dataset.action;
     if (!action) return;
     if (!menu.hidden) toggleMenu(false);
     if (action === 'slideshow') open(0, true);
-    if (action === 'shuffle') {
-      seed = Math.floor(Math.random() * 1e9);
-      const rand = rng(seed);
-      order = order.map(p => [rand(), p]).sort((a, b) => a[0] - b[0]).map(([, p]) => p);
-      renderScatter();
-      document.getElementById('gallery').scrollIntoView();
-    }
+    if (action === 'share') share(location.origin + location.pathname, 'Link copied, ready to paste');
   });
 
   let resizeRaf;
   window.addEventListener('resize', () => {
     cancelAnimationFrame(resizeRaf);
-    resizeRaf = requestAnimationFrame(() => { if (columnCount() !== columns) renderScatter(); });
+    resizeRaf = requestAnimationFrame(() => { if (columnCount() !== columns) renderChapters(); });
   });
 
-  fetch('photos.json')
-    .then(r => r.json())
-    .then(data => {
-      photos = data;
-      order = photos.slice();
-      document.querySelectorAll('[data-count]').forEach(el => { el.textContent = photos.length; });
+  /* ---------- Start ---------- */
+  Promise.all([fetch('photos.json').then(r => r.json()), fetch('chapters.json').then(r => r.json())])
+    .then(([photoData, chapterData]) => {
+      photos = photoData;
+      const byNum = new Map(photos.map(p => [num(p), p]));
+      const used = new Set();
+      chapters = chapterData.map(ch => {
+        const list = ch.photos.map(n => byNum.get(n)).filter(Boolean);
+        list.forEach(p => used.add(p));
+        return { ...ch, photos: list };
+      });
+      // Any photo not listed in chapters.json still gets shown.
+      const rest = photos.filter(p => !used.has(p));
+      if (rest.length) chapters.push({ id: 'more', title: 'More photographs', blurb: 'The rest of the day.', photos: rest });
+      order = chapters.flatMap(ch => ch.photos);
+
+      $$('[data-count]').forEach(el => { el.textContent = photos.length; });
       renderCarousel();
       renderHero();
-      renderScatter();
+      renderChapterNav();
+      renderChapters();
+      setupCursor();
+
+      const deep = location.hash.match(/^#photo-(\d+)$/);
+      if (deep) {
+        const photo = byNum.get(+deep[1]);
+        if (photo) open(order.indexOf(photo));
+      }
     })
     .catch(() => {
-      scatterEl.textContent = 'The photographs could not be loaded. Please refresh the page.';
+      $('#chapters').textContent = 'The photographs could not be loaded. Please refresh the page.';
     });
+
+  $$('.fade-up').forEach(el => revealObserver.observe(el));
+  requestAnimationFrame(() => {
+    document.body.classList.add('ready');
+    tickYears();
+  });
 })();
